@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+  <resultMap id="userResult" type="user">
+    <result property="id" column="id" />
+    <result property="name" column="name" />
+    <result property="email" column="email" />
+  </resultMap>
+
+  <select id="selectAllUsers" resultMap="userResult">
+    SELECT *
+    FROM user_tb;
+  </select>
+
+  <insert id="insertUser" parameterType="user">
+    INSERT INTO user_tb
+    (name, email)
+    VALUE
+    (#{name}, #{email});
+  </insert>
+
+  <insert id="insertUserList" parameterType="java.util.List">
+    INSERT INTO user_tb
+      (name, email)
+      VALUES
+       <foreach collection="list" item="item" separator=",">
+        (#{item.name}, #{item.email})
+       </foreach>
+  </insert>
+
+  <update id="updateUser" parameterType="map">
+    UPDATE user_tb SET
+      ${propertyName} = #{propertyValue}
+    WHERE id = #{id};
+  </update>
+
+  <delete id="deleteUser" parameterType="String">
+    DELETE
+    FROM user_tb
+    where name=#{name};
+  </delete>
+
+  <delete id="deleteAllUsers">
+    DELETE
+    FROM user_tb;
+  </delete>
+</mapper>
