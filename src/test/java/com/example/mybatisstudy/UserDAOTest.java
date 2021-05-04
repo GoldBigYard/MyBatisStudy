@@ -21,6 +21,11 @@ class UserDAOTest {
     }
 
     @Test
+    void selectUserTest() {
+        List<User> list = userDAO.selectAllUsers();
+    }
+
+    @Test
     void updateUserTest() {
         for(int i=0; i<100; i++){
             userDAO.insertUser(new User("aa", "aa@gmail.com"));
