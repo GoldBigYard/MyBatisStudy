@@ -50,10 +50,20 @@ public class UserDAO {
         }
     }
 
-    public int updateUser(String id, String propertyName, String propertyValue){
+    public int updateUserById(String id, String propertyName, String propertyValue){
         try (SqlSession sqlSession = sqlSessionFactory.openSession(execType, autoCommit)) {
             final HashMap<String, Object> params = new HashMap<>();
             params.put("id", id);
+            params.put("propertyName", propertyName);
+            params.put("propertyValue", propertyValue);
+            return sqlSession.update(NAMESPACE+"updateUser", params);
+        }
+    }
+
+    public int updateUserByName(String name, String propertyName, String propertyValue){
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(execType, autoCommit)) {
+            final HashMap<String, Object> params = new HashMap<>();
+            params.put("name", name);
             params.put("propertyName", propertyName);
             params.put("propertyValue", propertyValue);
             return sqlSession.update(NAMESPACE+"updateUser", params);

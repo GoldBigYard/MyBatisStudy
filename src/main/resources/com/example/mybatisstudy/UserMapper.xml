@@ -4,7 +4,7 @@
 
 <mapper namespace="user">
   <resultMap id="userResult" type="user">
-    <result property="id" column="id" />
+    <id property="id" column="id" />
     <result property="name" column="name" />
     <result property="email" column="email" />
   </resultMap>
@@ -33,7 +33,16 @@
   <update id="updateUser" parameterType="map">
     UPDATE user_tb SET
       ${propertyName} = #{propertyValue}
-    WHERE id = #{id};
+    <where>
+      <choose>
+        <when test="id != null">
+          AND id = #{id};
+        </when>
+        <when test="name != null">
+          AND name = #{name};
+        </when>
+      </choose>
+    </where>
   </update>
 
   <delete id="deleteUser" parameterType="String">
